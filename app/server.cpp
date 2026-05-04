@@ -1,32 +1,26 @@
 #include <iostream>
 
 #include <server.hpp>
+#include <variable_builder.hpp>
+#include <variant.hpp>
 
 int main() {
     /* Create a server listening on port 4840 (default) */
-    auto server = demo::Server{};
+    const auto server = demo::Server{};
 
-    /* Add a variable node to the server */
+    const auto status_creation = demo::VariableBuilder()
+                                         .with_name("the answer")
+                                         .with_custom_node("the.answer")
+                                         .with_value(demo::make_variant(42))
+                                         .add_to_server(server);
 
-    /* 1) Define the variable attributes */
-    UA_VariableAttributes attr = UA_VariableAttributes_default;
-    attr.displayName = UA_LOCALIZEDTEXT("en-US", "the answer");
-    UA_Int32 myInteger = 42;
-    UA_Variant_setScalar(&attr.value, &myInteger, &UA_TYPES[UA_TYPES_INT32]);
-
-    /* 2) Define where the node shall be added with which browsename */
-    UA_NodeId newNodeId = UA_NODEID_STRING(1, "the.answer");
-    UA_NodeId parentNodeId = UA_NS0ID(OBJECTSFOLDER);
-    UA_NodeId parentReferenceNodeId = UA_NS0ID(ORGANIZES);
-    UA_NodeId variableType = UA_NODEID_NULL; /* take the default variable type */
-    UA_QualifiedName browseName = UA_QUALIFIEDNAME(1, "the answer");
-
-    /* 3) Add the node */
-    UA_Server_addVariableNode(server.get_server(), newNodeId, parentNodeId, parentReferenceNodeId,
-                              browseName, variableType, attr, NULL, NULL);
+    if (status_creation != UA_STATUSCODE_GOOD) {
+        std::cerr << "Failed to create the variable" << std::endl;
+        return EXIT_FAILURE;
+    }
 
     /* Run the server (until ctrl-c interrupt) */
-    UA_StatusCode status = UA_Server_runUntilInterrupt(server.get_server());
+    const auto status = UA_Server_runUntilInterrupt(server.get_server());
 
     return status == UA_STATUSCODE_GOOD ? EXIT_SUCCESS : EXIT_FAILURE;
 }

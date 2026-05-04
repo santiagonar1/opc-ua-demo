@@ -24,6 +24,8 @@ set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules")
 
 set(SOURCES
         src/server.cpp
+        src/variant.cpp
+        src/variable_builder.cpp
 )
 
 add_library(${PROJECT_NAME})
