@@ -1,10 +1,10 @@
 #include <iostream>
 
-#include <open62541/server.h>
+#include <server.hpp>
 
 int main() {
     /* Create a server listening on port 4840 (default) */
-    UA_Server *server = UA_Server_new();
+    auto server = demo::Server{};
 
     /* Add a variable node to the server */
 
@@ -22,13 +22,11 @@ int main() {
     UA_QualifiedName browseName = UA_QUALIFIEDNAME(1, "the answer");
 
     /* 3) Add the node */
-    UA_Server_addVariableNode(server, newNodeId, parentNodeId, parentReferenceNodeId, browseName,
-                              variableType, attr, NULL, NULL);
+    UA_Server_addVariableNode(server.get_server(), newNodeId, parentNodeId, parentReferenceNodeId,
+                              browseName, variableType, attr, NULL, NULL);
 
     /* Run the server (until ctrl-c interrupt) */
-    UA_StatusCode status = UA_Server_runUntilInterrupt(server);
+    UA_StatusCode status = UA_Server_runUntilInterrupt(server.get_server());
 
-    /* Clean up */
-    UA_Server_delete(server);
     return status == UA_STATUSCODE_GOOD ? EXIT_SUCCESS : EXIT_FAILURE;
 }

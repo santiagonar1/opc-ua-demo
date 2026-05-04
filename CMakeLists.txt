@@ -17,18 +17,21 @@ endif ()
 
 option(BUILD_TESTING "Build tests" ON)
 
+find_package(open62541 REQUIRED)
+
 # Where to find our CMake modules. Needs to be called before any add_subdirectory for them to have access to the variable
 set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules")
 
-file(GLOB SOURCES
-        src/*.cpp
+set(SOURCES
+        src/server.cpp
 )
 
 add_library(${PROJECT_NAME})
 target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_20)
 
 target_sources(${PROJECT_NAME}
-        PRIVATE ${SOURCES})
+        PRIVATE ${SOURCES}
+)
 
 # See: https://decovar.dev/blog/2021/03/08/cmake-cpp-library/#include-directories
 target_include_directories(${PROJECT_NAME}
@@ -40,6 +43,10 @@ target_include_directories(${PROJECT_NAME}
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
         # where external projects will look for the library's public headers
         $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
+)
+
+target_link_libraries(${PROJECT_NAME}
+        PRIVATE open62541::open62541
 )
 
 add_subdirectory(app)
