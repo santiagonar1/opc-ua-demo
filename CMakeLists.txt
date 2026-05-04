@@ -17,6 +17,9 @@ endif ()
 
 option(BUILD_TESTING "Build tests" ON)
 
+# Where to find our CMake modules. Needs to be called before any add_subdirectory for them to have access to the variable
+set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules")
+
 file(GLOB SOURCES
         src/*.cpp
 )
