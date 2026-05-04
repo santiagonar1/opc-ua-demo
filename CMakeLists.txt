@@ -45,7 +45,7 @@ if (BUILD_TESTING)
     enable_testing()
     add_subdirectory(tests)
 else ()
-    message(STATUS "Tests and benchmarks will not be compiled")
+    message(STATUS "Tests will not be compiled")
 endif ()
 
 
