@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.28)
-project(amazing_app)
+project(opc_ua_demo)
 
 # Set compiler to use Xcode SDK
 if (APPLE)
