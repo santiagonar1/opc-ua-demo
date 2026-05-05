@@ -7,8 +7,8 @@
 int main() {
     const auto client = demo::Client{};
 
-    UA_StatusCode status = UA_Client_connect(client.get_client(), "opc.tcp://localhost:4840");
-    if (status != UA_STATUSCODE_GOOD) { return status; }
+    auto status = client.connect("opc.tcp://localhost:4840");
+    if (status != UA_STATUSCODE_GOOD) { return static_cast<int>(status); }
 
     /* Read the value attribute of the node. UA_Client_readValueAttribute is a
      * wrapper for the raw read service available as UA_Client_Service_read. */
