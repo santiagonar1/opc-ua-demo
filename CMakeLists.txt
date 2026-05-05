@@ -30,7 +30,7 @@ set(SOURCES
 )
 
 add_library(${PROJECT_NAME})
-target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_20)
+target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_23)
 
 target_sources(${PROJECT_NAME}
         PRIVATE ${SOURCES}
