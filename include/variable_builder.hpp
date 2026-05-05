@@ -18,7 +18,7 @@ namespace demo {
         auto with_value(const UA_Variant &value) -> VariableBuilder &;
         auto writable(bool isWritable) -> VariableBuilder &;
 
-        auto add_to_server(const Server &server) const -> UA_StatusCode;
+        [[nodiscard]] auto add_to_server(const Server &server) const -> UA_StatusCode;
 
     private:
         UA_VariableAttributes _attributes{UA_VariableAttributes_default};
