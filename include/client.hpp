@@ -39,7 +39,7 @@ namespace demo {
             return std::unexpected(status);
         }
 
-        const auto data = *static_cast<UA_Int32 *>(variant.data);
+        const auto data = extract_value<int32_t>(variant).value();
         UA_Variant_clear(&variant);
 
         return data;

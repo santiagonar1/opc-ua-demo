@@ -6,23 +6,23 @@
 #include <string>
 
 namespace demo {
+    using ErrorType = std::string;
+
     [[nodiscard]] auto make_variant() -> UA_Variant;
     [[nodiscard]] auto make_variant(int32_t value) -> UA_Variant;
+    [[nodiscard]] auto make_variant(uint32_t value) -> UA_Variant;
 
-    class Variant {
-    public:
-        using ErrorType = std::string;
+    template<typename T>
+    [[nodiscard]] auto extract_value(const UA_Variant &variant)
+            -> std::expected<T, ErrorType> = delete;
 
-        Variant();
-        explicit Variant(int32_t value);
+    template<>
+    [[nodiscard]] auto extract_value(const UA_Variant &variant)
+            -> std::expected<int32_t, ErrorType>;
 
-        ~Variant();
-
-        [[nodiscard]] auto extract() const -> std::expected<int32_t, ErrorType>;
-
-    private:
-        UA_Variant _variant{};
-    };
+    template<>
+    [[nodiscard]] auto extract_value(const UA_Variant &variant)
+            -> std::expected<uint32_t, ErrorType>;
 }// namespace demo
 
 #endif//OPC_UA_DEMO_VARIANT_HPP
