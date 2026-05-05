@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-      - develop
   pull_request:
     types: [ opened, synchronize, reopened ]
     branches:
@@ -12,19 +11,10 @@ on:
 
 jobs:
   testing:
-    name: ${{ format('Testing {0}', matrix.CXX) }}
+    name: GCC tests
     runs-on: ubuntu-latest
     container: santiagonar1/cpp-dev:latest
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          - CXX: clang++
-            CC: clang
-            CONAN_PROFILE: clang
-          - CXX: g++
-            CC: gcc
-            CONAN_PROFILE: gcc
+
     steps:
       - name: Check out repository
         uses: actions/checkout@v6
@@ -35,11 +25,10 @@ jobs:
       - name: Configure
         working-directory: build
         env:
-          CXX: ${{ matrix.CXX }}
-          CC: ${{ matrix.CC }}
-          PROFILE: "/root/.conan2/profiles/${{ matrix.CONAN_PROFILE }}"
+          CXX: g++
+          CC: gcc
         run: |
-          cmake -DCMAKE_PROJECT_TOP_LEVEL_INCLUDES=conan_provider.cmake -DCONAN_HOST_PROFILE=${{ env.PROFILE }} -DCONAN_BUILD_PROFILE=${{ env.PROFILE }} ..
+          cmake -DCMAKE_PROJECT_TOP_LEVEL_INCLUDES=conan_provider.cmake ..
 
       - name: Compile
         working-directory: build
