@@ -10,13 +10,13 @@ int main() {
     const auto server = demo::Server{};
 
     // I am modeling the following hierarchy
-    //   Objects/
-    //        MRI_Scanner/
-    //            Magnet/
-    //            Temperature      <- Variable (float, 4.2 K)
-    //            FieldStrength    <- Variable (float, 3.0 T)
-    //        Status             <- Variable (string, "Idle")
-    //        ScanProgress       <- Variable (int, 0-100%)
+    // Objects/
+    // MRI_Scanner/
+    //     Magnet/
+    //         Temperature     <- Variable (float, 4.2 K)
+    //         FieldStrength   <- Variable (float, 3.0 T)
+    //     Status              <- Variable (string, "Idle")
+    //     ScanProgress        <- Variable (int, 0-100%)
 
     // Create MRI_Scanner object
     auto scanner = demo::ObjectBuilder{};
