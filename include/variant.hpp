@@ -12,6 +12,7 @@ namespace demo {
     [[nodiscard]] auto make_variant(int32_t value) -> UA_Variant;
     [[nodiscard]] auto make_variant(uint32_t value) -> UA_Variant;
     [[nodiscard]] auto make_variant(float value) -> UA_Variant;
+    [[nodiscard]] auto make_variant(const std::string &value) -> UA_Variant;
 
     template<typename T>
     [[nodiscard]] auto extract_value(const UA_Variant &variant)
@@ -27,6 +28,10 @@ namespace demo {
 
     template<>
     [[nodiscard]] auto extract_value(const UA_Variant &variant) -> std::expected<float, ErrorType>;
+
+    template<>
+    [[nodiscard]] auto extract_value(const UA_Variant &variant)
+            -> std::expected<std::string, ErrorType>;
 }// namespace demo
 
 #endif//OPC_UA_DEMO_VARIANT_HPP

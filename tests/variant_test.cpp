@@ -32,6 +32,14 @@ TEST(AVariant, CanContainFloat) {
     EXPECT_THAT(value.value(), FloatEq(3.14159265359f));
 }
 
+TEST(AVariant, CanContainString) {
+    const auto variant = make_variant("Hello, World!");
+    const auto value = extract_value<std::string>(variant);
+
+    ASSERT_TRUE(value.has_value());
+    EXPECT_THAT(value.value(), Eq("Hello, World!"));
+}
+
 TEST(ExtractValue, ReturnsErrorIfVariantDoesNotContainType) {
     const auto int_32t_variant = make_variant(42);
     const auto value = extract_value<uint32_t>(int_32t_variant);
