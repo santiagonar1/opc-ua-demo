@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.28)
-project(amazing_app)
+project(opc_ua_demo)
 
 # Set compiler to use Xcode SDK
 if (APPLE)
@@ -17,15 +17,25 @@ endif ()
 
 option(BUILD_TESTING "Build tests" ON)
 
-file(GLOB SOURCES
-        src/*.cpp
+find_package(open62541 REQUIRED)
+
+# Where to find our CMake modules. Needs to be called before any add_subdirectory for them to have access to the variable
+set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules")
+
+set(SOURCES
+        src/client.cpp
+        src/object_builder.cpp
+        src/server.cpp
+        src/variant.cpp
+        src/variable_builder.cpp
 )
 
 add_library(${PROJECT_NAME})
-target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_20)
+target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_23)
 
 target_sources(${PROJECT_NAME}
-        PRIVATE ${SOURCES})
+        PRIVATE ${SOURCES}
+)
 
 # See: https://decovar.dev/blog/2021/03/08/cmake-cpp-library/#include-directories
 target_include_directories(${PROJECT_NAME}
@@ -39,13 +49,17 @@ target_include_directories(${PROJECT_NAME}
         $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
 )
 
+target_link_libraries(${PROJECT_NAME}
+        PUBLIC open62541::open62541
+)
+
 add_subdirectory(app)
 
 if (BUILD_TESTING)
     enable_testing()
     add_subdirectory(tests)
 else ()
-    message(STATUS "Tests and benchmarks will not be compiled")
+    message(STATUS "Tests will not be compiled")
 endif ()
 
 
