@@ -34,12 +34,11 @@ namespace demo {
         constexpr auto namespace_index = 1;
         if (const auto status = UA_Client_readValueAttribute(
                     _client, UA_NODEID_STRING(namespace_index, id.data()), &variant);
-            status != UA_STATUSCODE_GOOD or
-            not UA_Variant_hasScalarType(&variant, &UA_TYPES[UA_TYPES_INT32])) {
+            status != UA_STATUSCODE_GOOD) {
             return std::unexpected(status);
         }
 
-        const auto data = extract_value<int32_t>(variant).value();
+        const auto data = extract_value<T>(variant).value();
         UA_Variant_clear(&variant);
 
         return data;
