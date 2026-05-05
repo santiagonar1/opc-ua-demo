@@ -40,9 +40,7 @@ namespace demo {
     auto VariableBuilder::add_to_server(const Server &server) const -> UA_StatusCode {
         const auto browse_name = UA_QUALIFIEDNAME_ALLOC(1, _name.c_str());
 
-        return UA_Server_addVariableNode(server.get_server(), _node_id, _parent_id,
-                                         UA_NS0ID(ORGANIZES), browse_name, UA_NODEID_NULL,
-                                         _attributes, nullptr, nullptr);
+        return server.add_variable_node(_node_id, _parent_id, browse_name, _attributes);
     }
 
 }// namespace demo
