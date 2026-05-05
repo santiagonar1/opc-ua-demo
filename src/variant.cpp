@@ -13,4 +13,8 @@ namespace demo {
         UA_Variant_setScalarCopy(&variant, &value, &UA_TYPES[UA_TYPES_INT32]);
         return variant;
     }
+
+    Variant::Variant() { UA_Variant_init(&_variant); }
+
+    Variant::~Variant() { UA_Variant_clear(&_variant); }
 }// namespace demo

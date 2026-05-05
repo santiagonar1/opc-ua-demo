@@ -6,6 +6,15 @@
 namespace demo {
     [[nodiscard]] auto make_variant() -> UA_Variant;
     [[nodiscard]] auto make_variant(int32_t value) -> UA_Variant;
-}
+
+    class Variant {
+    public:
+        Variant();
+        ~Variant();
+
+    private:
+        UA_Variant _variant{};
+    };
+}// namespace demo
 
 #endif//OPC_UA_DEMO_VARIANT_HPP
