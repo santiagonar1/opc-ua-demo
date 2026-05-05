@@ -20,7 +20,7 @@ int main() {
     }
 
     /* Run the server (until ctrl-c interrupt) */
-    const auto status = UA_Server_runUntilInterrupt(server.get_server());
+    const auto status = server.run_until_interrupt();
 
     return status == UA_STATUSCODE_GOOD ? EXIT_SUCCESS : EXIT_FAILURE;
 }

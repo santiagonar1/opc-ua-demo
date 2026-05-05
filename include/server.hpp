@@ -10,6 +10,7 @@ namespace demo {
         ~Server();
 
         [[nodiscard]] auto get_server() const -> UA_Server *;
+        [[nodiscard]] auto run_until_interrupt() const -> UA_StatusCode;
 
     private:
         UA_Server *server;
