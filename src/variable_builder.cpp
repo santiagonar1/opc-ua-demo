@@ -5,7 +5,7 @@ namespace demo {
 
     auto VariableBuilder::with_name(const std::string_view name) -> VariableBuilder & {
         _name = name;
-        _attributes.displayName = UA_LOCALIZEDTEXT_ALLOC("", name.data());
+        _attributes.displayName = UA_LOCALIZEDTEXT_ALLOC("en-US", name.data());
 
         return *this;
     }
