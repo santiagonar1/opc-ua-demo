@@ -1,6 +1,12 @@
 #include "variant.hpp"
 
 namespace demo {
+    auto make_variant() -> UA_Variant {
+        UA_Variant variant;
+        UA_Variant_init(&variant);
+        return variant;
+    }
+
     auto make_variant(const int32_t value) -> UA_Variant {
         UA_Variant variant;
         UA_Variant_init(&variant);

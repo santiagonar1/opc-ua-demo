@@ -3,6 +3,7 @@
 #include <stdio.h>
 
 #include <client.hpp>
+#include <variant.hpp>
 
 int main() {
     const auto client = demo::Client{};
@@ -10,10 +11,7 @@ int main() {
     auto status = client.connect("opc.tcp://localhost:4840");
     if (status != UA_STATUSCODE_GOOD) { return static_cast<int>(status); }
 
-    /* Read the value attribute of the node. UA_Client_readValueAttribute is a
-     * wrapper for the raw read service available as UA_Client_Service_read. */
-    UA_Variant value; /* Variants can hold scalar values and arrays of any type */
-    UA_Variant_init(&value);
+    auto value = demo::make_variant(); /* Variants can hold scalar values and arrays of any type */
     status = UA_Client_readValueAttribute(client.get_client(), UA_NODEID_STRING(1, "the.answer"),
                                           &value);
     if (status == UA_STATUSCODE_GOOD &&
