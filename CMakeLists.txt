@@ -24,6 +24,7 @@ set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules")
 
 set(SOURCES
         src/client.cpp
+        src/object_builder.cpp
         src/server.cpp
         src/variant.cpp
         src/variable_builder.cpp
