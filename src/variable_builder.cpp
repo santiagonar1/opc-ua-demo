@@ -38,10 +38,10 @@ namespace demo {
     }
 
     auto VariableBuilder::add_to_server(const Server &server) const -> UA_StatusCode {
-        const UA_QualifiedName browseName = UA_QUALIFIEDNAME_ALLOC(1, _name.c_str());
+        const auto browse_name = UA_QUALIFIEDNAME_ALLOC(1, _name.c_str());
 
         return UA_Server_addVariableNode(server.get_server(), _node_id, _parent_id,
-                                         UA_NS0ID(ORGANIZES), browseName, UA_NODEID_NULL,
+                                         UA_NS0ID(ORGANIZES), browse_name, UA_NODEID_NULL,
                                          _attributes, nullptr, nullptr);
     }
 
