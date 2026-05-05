@@ -21,6 +21,13 @@ namespace demo {
         return variant;
     }
 
+    auto make_variant(const float value) -> UA_Variant {
+        UA_Variant variant;
+        UA_Variant_init(&variant);
+        UA_Variant_setScalarCopy(&variant, &value, &UA_TYPES[UA_TYPES_FLOAT]);
+        return variant;
+    }
+
     template<>
     [[nodiscard]] auto extract_value<int32_t>(const UA_Variant &variant)
             -> std::expected<int32_t, std::string> {
@@ -40,4 +47,15 @@ namespace demo {
 
         return *static_cast<const uint32_t *>(variant.data);
     }
+
+    template<>
+    [[nodiscard]] auto extract_value<float>(const UA_Variant &variant)
+            -> std::expected<float, std::string> {
+        if (not UA_Variant_hasScalarType(&variant, &UA_TYPES[UA_TYPES_FLOAT])) {
+            return std::unexpected("Variant does not contain float");
+        }
+
+        return *static_cast<const float *>(variant.data);
+    }
+
 }// namespace demo

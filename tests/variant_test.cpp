@@ -6,6 +6,7 @@
 using namespace demo;
 
 using testing::Eq;
+using testing::FloatEq;
 
 TEST(AVariant, CanContainInt32Value) {
     const auto variant = make_variant(42);
@@ -21,6 +22,14 @@ TEST(AVariant, CanContainUInt32ValueValue) {
 
     ASSERT_TRUE(value.has_value());
     EXPECT_THAT(value.value(), Eq(40u));
+}
+
+TEST(AVariant, CanContainFloat) {
+    const auto variant = make_variant(3.14159265359f);
+    const auto value = extract_value<float>(variant);
+
+    ASSERT_TRUE(value.has_value());
+    EXPECT_THAT(value.value(), FloatEq(3.14159265359f));
 }
 
 TEST(ExtractValue, ReturnsErrorIfVariantDoesNotContainType) {
