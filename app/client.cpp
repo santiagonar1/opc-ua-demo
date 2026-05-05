@@ -11,7 +11,7 @@ int main() {
         return static_cast<int>(status);
     }
 
-    const auto value = client.read_attribute_custom_node<int32_t>("the.answer");
+    const auto value = client.read_attribute_custom_node<int32_t>("mri.scanner.scanprogress");
 
     if (not value.has_value()) {
         std::cerr << "Failed to read the value" << std::endl;
